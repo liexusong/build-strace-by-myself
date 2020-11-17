@@ -399,7 +399,7 @@ struct syscall {
     {-1, NULL},
 };
 
-char *find_syscall(int code) {
+char *find_syscall_symbol(int code) {
     struct syscall *sc;
 
     for (sc = syscall_table; sc->code >= 0; sc++) {
@@ -439,7 +439,7 @@ int main(int argc, char *argv[])
 
             orig_rax = regs.orig_rax; // 获取rax寄存器的值
 
-            printf("syscall: %s()\n", find_syscall(orig_rax)); // 打印rax寄存器的值
+            printf("syscall: %s()\n", find_syscall_symbol(orig_rax)); // 打印rax寄存器的值
 
             // 2. 发送 PTRACE_SYSCALL 命令给被跟踪进程 (调用系统调用后，可以获取系统调用的返回值)
             ptrace(PTRACE_SYSCALL, child, NULL, NULL);
